@@ -71,6 +71,8 @@ let
             RealName = ${confOpts.nick}
             TimestampFormat = [%H:%M:%S]
             ${concatMapStrings (n: "LoadModule = ${n}\n") confOpts.userModules}
+
+            ${confOpts.extraUserZncConf}
             
             ${confOpts.passBlock}
     </User>
@@ -207,6 +209,14 @@ in
           type = types.bool;
           description = ''
             Indicates whether the ZNC server should use SSL when listening on the specified port.
+          '';
+        };
+
+        extraUserZncConf = mkOption {
+          default = "";
+          type = types.lines;
+          description = ''
+            Extra config for the default user in `znc.conf` file
           '';
         };
 
